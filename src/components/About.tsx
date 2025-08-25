@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 export default function About() {
   const [mounted, setMounted] = useState(false)
@@ -75,10 +76,12 @@ export default function About() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <img 
+            <Image 
               src="/pictures/tal-portrait.png" 
               alt="טל בן שבע - תמונת מקצועית"
-              loading="lazy"
+              width={400}
+              height={500}
+              priority
             />
           </motion.div>
         </div>

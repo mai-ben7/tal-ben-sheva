@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
 export default function Gallery() {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -93,10 +94,12 @@ export default function Gallery() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
               >
-                <img 
+                <Image 
                   src={galleryImages[currentIndex].src} 
                   alt={galleryImages[currentIndex].alt}
-                  loading="lazy"
+                  width={800}
+                  height={600}
+                  priority
                 />
               </motion.div>
             </AnimatePresence>
@@ -154,9 +157,11 @@ export default function Gallery() {
                 aria-label={`עבור לתמונה ${index + 1}`}
                 disabled={!mounted}
               >
-                <img 
+                <Image 
                   src={image.src} 
                   alt={image.alt}
+                  width={100}
+                  height={75}
                   loading="lazy"
                 />
               </button>
