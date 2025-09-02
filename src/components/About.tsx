@@ -3,13 +3,22 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useReducedMotionOrSmall } from '../hooks/useReducedMotionOrSmall'
 
 export default function About() {
   const [mounted, setMounted] = useState(false)
+  const reduceMotion = useReducedMotionOrSmall()
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Disable animations if reduced motion is preferred
+  const animationProps = reduceMotion ? {
+    initial: { opacity: 1, y: 0, x: 0 },
+    whileInView: { opacity: 1, y: 0, x: 0 },
+    transition: { duration: 0 }
+  } : {}
 
   return (
     <section id="about" className="about">
@@ -17,18 +26,20 @@ export default function About() {
         <div className="section-header">
           <motion.h2 
             className="section-title"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={mounted && !reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.8 }}
             viewport={{ once: true }}
           >
             אודותיי
           </motion.h2>
           <motion.p 
             className="section-subtitle"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={mounted && !reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
             שחקנית מקצועית עם תשוקה לאמנות
@@ -38,9 +49,10 @@ export default function About() {
         <div className="about-content">
           <motion.div 
             className="about-text"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={mounted ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.8 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            whileInView={mounted && !reduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.8 }}
             viewport={{ once: true }}
           >
             <p className="about-intro">
@@ -71,9 +83,10 @@ export default function About() {
           
           <motion.div 
             className="about-image"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={mounted ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+            whileInView={mounted && !reduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
             <Image 
@@ -82,6 +95,7 @@ export default function About() {
               width={400}
               height={500}
               priority
+              sizes="(min-width: 1024px) 400px, (min-width: 768px) 350px, 300px"
             />
           </motion.div>
         </div>

@@ -2,71 +2,38 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useReducedMotionOrSmall } from '../hooks/useReducedMotionOrSmall'
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  })
+  const [mounted, setMounted] = useState(false)
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
-  const [mounted, setMounted] = useState(false)
+  const reduceMotion = useReducedMotionOrSmall()
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-  }
+  // Disable animations if reduced motion is preferred
+  const animationProps = reduceMotion ? {
+    initial: { opacity: 1, y: 0, x: 0 },
+    whileInView: { opacity: 1, y: 0, x: 0 },
+    transition: { duration: 0 }
+  } : {}
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
     setSubmitStatus('idle')
 
-    // Basic validation
-    if (!formData.name || !formData.email || !formData.message) {
-      setSubmitStatus('error')
-      setIsSubmitting(false)
-      return
-    }
-
-    // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(formData.email)) {
-      setSubmitStatus('error')
-      setIsSubmitting(false)
-      return
-    }
-
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1000))
       
-      // Send email using mailto
-      const subject = encodeURIComponent(`הודעה חדשה מ-${formData.name} - אתר טל בן שבע`)
-      const body = encodeURIComponent(`
-שלום,
-
-קיבלתי הודעה חדשה מהאתר של טל בן שבע:
-
-שם: ${formData.name}
-אימייל: ${formData.email}
-
-הודעה:
-${formData.message}
-
----
-נשלח מהאתר של טל בן שבע
-      `)
+      // Create mailto link
+      const mailtoLink = `mailto:tal@example.com?subject=פנייה חדשה מ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(`שם: ${formData.name}\nאימייל: ${formData.email}\nהודעה: ${formData.message}`)}`
       
-      const mailtoLink = `mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'tal942899@gmail.com'}?subject=${subject}&body=${body}`
       window.open(mailtoLink, '_blank')
       
       setSubmitStatus('success')
@@ -78,24 +45,31 @@ ${formData.message}
     }
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
   return (
     <section id="contact" className="contact">
       <div className="container">
         <div className="section-header">
           <motion.h2 
             className="section-title"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.8 }}
             viewport={{ once: true }}
           >
             צור קשר
           </motion.h2>
           <motion.p 
             className="section-subtitle"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0, delay: 0.2 } : { duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
             מוכנה לעבודה ופתוחה להזדמנויות חדשות
@@ -105,9 +79,10 @@ ${formData.message}
         <div className="contact-content">
           <motion.div 
             className="contact-info"
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            whileInView={reduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.8 }}
             viewport={{ once: true }}
           >
             <h3>בואו לעבוד יחד</h3>
@@ -118,15 +93,15 @@ ${formData.message}
             
             <div className="contact-highlights">
               <div className="highlight-item">
-                <i className="fas fa-check-circle"></i>
+                <i className="fas fa-check-circle" aria-hidden="true"></i>
                 <span>זמינה מיידית לעבודה</span>
               </div>
               <div className="highlight-item">
-                <i className="fas fa-check-circle"></i>
+                <i className="fas fa-check-circle" aria-hidden="true"></i>
                 <span>ניסיון במגוון סגנונות</span>
               </div>
               <div className="highlight-item">
-                <i className="fas fa-check-circle"></i>
+                <i className="fas fa-check-circle" aria-hidden="true"></i>
                 <span>מקצועית ואמינה</span>
               </div>
             </div>
@@ -178,85 +153,95 @@ ${formData.message}
                   ההודעה שלך
                 </div>
               </div>
-              
-              <div className="btn btn-primary" style={{ opacity: 0.6, cursor: 'not-allowed' }}>
-                <i className="fas fa-paper-plane"></i>
-                שלח הודעה
-              </div>
             </div>
           ) : (
             <motion.form 
               className="contact-form"
               onSubmit={handleSubmit}
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              {...animationProps}
+              initial={reduceMotion ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+              whileInView={reduceMotion ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+              transition={reduceMotion ? { duration: 0, delay: 0.2 } : { duration: 0.8, delay: 0.2 }}
+              viewport={{ once: true }}
             >
               <div className="form-group">
+                <label htmlFor="name" className="sr-only">שם</label>
                 <input
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="השם שלך"
                   value={formData.name}
                   onChange={handleInputChange}
+                  placeholder="השם שלך"
                   required
+                  minLength={2}
+                  aria-describedby="name-error"
                 />
+                {submitStatus === 'error' && (
+                  <div id="name-error" className="error-message" role="alert">
+                    אנא הזן את שמך
+                  </div>
+                )}
               </div>
               
               <div className="form-group">
+                <label htmlFor="email" className="sr-only">אימייל</label>
                 <input
                   type="email"
                   id="email"
                   name="email"
-                  placeholder="האימייל שלך"
                   value={formData.email}
                   onChange={handleInputChange}
+                  placeholder="האימייל שלך"
                   required
+                  inputMode="email"
+                  aria-describedby="email-error"
                 />
+                {submitStatus === 'error' && (
+                  <div id="email-error" className="error-message" role="alert">
+                    אנא הזן אימייל תקין
+                  </div>
+                )}
               </div>
               
               <div className="form-group">
+                <label htmlFor="message" className="sr-only">הודעה</label>
                 <textarea
                   id="message"
                   name="message"
-                  placeholder="ההודעה שלך"
-                  rows={5}
                   value={formData.message}
                   onChange={handleInputChange}
+                  placeholder="ההודעה שלך"
                   required
-                ></textarea>
+                  minLength={10}
+                  aria-describedby="message-error"
+                />
+                {submitStatus === 'error' && (
+                  <div id="message-error" className="error-message" role="alert">
+                    אנא הזן הודעה של לפחות 10 תווים
+                  </div>
+                )}
               </div>
               
               <button 
                 type="submit" 
                 className="btn btn-primary"
                 disabled={isSubmitting}
+                aria-describedby="submit-status"
               >
-                <i className={`fas ${isSubmitting ? 'fa-spinner fa-spin' : 'fa-paper-plane'}`}></i>
                 {isSubmitting ? 'שולח...' : 'שלח הודעה'}
               </button>
               
               {submitStatus === 'success' && (
-                <motion.div
-                  className="success-message"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  style={{ color: '#27ae60', marginTop: '1rem', textAlign: 'center' }}
-                >
-                  תודה! ההודעה נשלחה בהצלחה. נחזור אליך בקרוב.
-                </motion.div>
+                <div id="submit-status" className="success-message" role="alert">
+                  ההודעה נשלחה בהצלחה! נפתח חלון אימייל חדש.
+                </div>
               )}
               
               {submitStatus === 'error' && (
-                <motion.div
-                  className="error-message"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  style={{ color: '#e74c3c', marginTop: '1rem', textAlign: 'center' }}
-                >
-                  שגיאה בשליחת ההודעה. אנא נסה שוב.
-                </motion.div>
+                <div id="submit-status" className="error-message" role="alert">
+                  אירעה שגיאה בשליחת ההודעה. אנא נסה שוב.
+                </div>
               )}
             </motion.form>
           )}

@@ -3,49 +3,50 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
+import { useReducedMotionOrSmall } from '../hooks/useReducedMotionOrSmall'
 
 export default function Gallery() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const reduceMotion = useReducedMotionOrSmall()
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  // All gallery images including the new ones, shuffled
+  // Disable animations if reduced motion is preferred
+  const animationProps = reduceMotion ? {
+    initial: { opacity: 1, scale: 1 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 1, scale: 1 },
+    transition: { duration: 0 }
+  } : {}
+
   const galleryImages = [
-    { id: 1, src: '/pictures/downloadgram.org_491434446_18501168475009447_1493011779868230088_n.jpg', alt: 'טל בן שבע - תמונה 1' },
-    { id: 2, src: '/pictures/downloadgram.org_491439042_18501168466009447_5320768253713339384_n.jpg', alt: 'טל בן שבע - תמונה 2' },
-    { id: 3, src: '/pictures/downloadgram.org_490490090_18501168457009447_3419116011539670807_n.jpg', alt: 'טל בן שבע - תמונה 3' },
-    { id: 4, src: '/pictures/downloadgram.org_491439782_18501168448009447_9075142343546875635_n.jpg', alt: 'טל בן שבע - תמונה 4' },
-    { id: 5, src: '/pictures/downloadgram.org_490117213_18499787509009447_8118630689549531511_n.jpg', alt: 'טל בן שבע - תמונה 5' },
-    { id: 6, src: '/pictures/downloadgram.org_490324044_18499787551009447_1244171286191995865_n.jpg', alt: 'טל בן שבע - תמונה 6' },
-    { id: 7, src: '/pictures/downloadgram.org_490215812_18499787527009447_5823448968552371307_n.jpg', alt: 'טל בן שבע - תמונה 7' },
-    { id: 8, src: '/pictures/IMG_4402.jpeg', alt: 'טל בן שבע - תמונה 8' },
-    { id: 9, src: '/pictures/IMG_4417.jpeg', alt: 'טל בן שבע - תמונה 9' },
-    { id: 10, src: '/pictures/IMG_4431.jpeg', alt: 'טל בן שבע - תמונה 10' },
-    { id: 11, src: '/pictures/IMG_4425.jpeg', alt: 'טל בן שבע - תמונה 11' },
-    { id: 12, src: '/pictures/IMG_4123.jpeg', alt: 'טל בן שבע - תמונה 12' },
-    { id: 13, src: '/pictures/IMG_3648.jpeg', alt: 'טל בן שבע - תמונה 13' },
-    { id: 14, src: '/pictures/IMG_4397.jpeg', alt: 'טל בן שבע - תמונה 14' },
-    { id: 15, src: '/pictures/IMG_4064.jpeg', alt: 'טל בן שבע - תמונה 15' },
-    { id: 16, src: '/pictures/IMG_4426.jpeg', alt: 'טל בן שבע - תמונה 16' },
-    { id: 17, src: '/pictures/IMG_4327.jpeg', alt: 'טל בן שבע - תמונה 17' },
-    { id: 18, src: '/pictures/IMG_4094.jpeg', alt: 'טל בן שבע - תמונה 18' },
-    { id: 19, src: '/pictures/IMG_4432.jpeg', alt: 'טל בן שבע - תמונה 19' }
+    { id: 1, src: '/pictures/IMG_3648.jpeg', alt: 'טל בן שבע - תמונה מקצועית 1' },
+    { id: 2, src: '/pictures/IMG_4064.jpeg', alt: 'טל בן שבע - תמונה מקצועית 2' },
+    { id: 3, src: '/pictures/IMG_4094.jpeg', alt: 'טל בן שבע - תמונה מקצועית 3' },
+    { id: 4, src: '/pictures/IMG_4123.jpeg', alt: 'טל בן שבע - תמונה מקצועית 4' },
+    { id: 5, src: '/pictures/IMG_4327.jpeg', alt: 'טל בן שבע - תמונה מקצועית 5' },
+    { id: 6, src: '/pictures/IMG_4397.jpeg', alt: 'טל בן שבע - תמונה מקצועית 6' },
+    { id: 7, src: '/pictures/IMG_4402.jpeg', alt: 'טל בן שבע - תמונה מקצועית 7' },
+    { id: 8, src: '/pictures/IMG_4417.jpeg', alt: 'טל בן שבע - תמונה מקצועית 8' },
+    { id: 9, src: '/pictures/IMG_4425.jpeg', alt: 'טל בן שבע - תמונה מקצועית 9' },
+    { id: 10, src: '/pictures/IMG_4426.jpeg', alt: 'טל בן שבע - תמונה מקצועית 10' },
+    { id: 11, src: '/pictures/IMG_4431.jpeg', alt: 'טל בן שבע - תמונה מקצועית 11' },
+    { id: 12, src: '/pictures/IMG_4432.jpeg', alt: 'טל בן שבע - תמונה מקצועית 12' },
   ]
 
-  // Auto-play functionality
   useEffect(() => {
-    if (!isAutoPlaying) return
+    if (!mounted || !isAutoPlaying || reduceMotion) return
 
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % galleryImages.length)
     }, 4000)
 
     return () => clearInterval(interval)
-  }, [isAutoPlaying, galleryImages.length])
+  }, [mounted, isAutoPlaying, galleryImages.length, reduceMotion])
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % galleryImages.length)
@@ -59,24 +60,56 @@ export default function Gallery() {
     setCurrentIndex(index)
   }
 
+  // Touch/swipe support for mobile
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return
+    
+    const distance = touchStart - touchEnd
+    const isLeftSwipe = distance > 50
+    const isRightSwipe = distance < -50
+
+    if (isLeftSwipe) {
+      nextSlide()
+    }
+    if (isRightSwipe) {
+      prevSlide()
+    }
+
+    setTouchStart(0)
+    setTouchEnd(0)
+  }
+
   return (
     <section id="gallery" className="gallery">
       <div className="container">
         <div className="section-header">
           <motion.h2 
             className="section-title"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 0.8 }}
             viewport={{ once: true }}
           >
             גלריה
           </motion.h2>
           <motion.p 
             className="section-subtitle"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0, delay: 0.2 } : { duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
             תמונות מקצועיות של טל בן שבע
@@ -84,15 +117,21 @@ export default function Gallery() {
         </div>
         
         <div className="gallery-carousel">
-          <div className="carousel-container">
+          <div 
+            className="carousel-container"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
                 className="carousel-slide"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
+                {...animationProps}
+                initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                animate={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
+                exit={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+                transition={reduceMotion ? { duration: 0 } : { duration: 0.5, ease: "easeInOut" }}
               >
                 <Image 
                   src={galleryImages[currentIndex].src} 
@@ -100,6 +139,8 @@ export default function Gallery() {
                   width={800}
                   height={600}
                   priority
+                  sizes="(min-width: 1024px) 800px, (min-width: 768px) 600px, 400px"
+                  className="w-full h-full object-cover"
                 />
               </motion.div>
             </AnimatePresence>
@@ -111,7 +152,7 @@ export default function Gallery() {
               aria-label="תמונה קודמת"
               disabled={!mounted}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M15 18l-6-6 6-6"/>
               </svg>
             </button>
@@ -122,29 +163,31 @@ export default function Gallery() {
               aria-label="תמונה הבאה"
               disabled={!mounted}
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                 <path d="M9 18l6-6-6-6"/>
               </svg>
             </button>
 
-            {/* Play/Pause button */}
-            <button 
-              className="carousel-btn carousel-btn-play"
-              onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-              aria-label={isAutoPlaying ? "עצור" : "הפעל"}
-              disabled={!mounted}
-            >
-              {isAutoPlaying ? (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="6" y="4" width="4" height="16"/>
-                  <rect x="14" y="4" width="4" height="16"/>
-                </svg>
-              ) : (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polygon points="5,3 19,12 5,21"/>
-                </svg>
-              )}
-            </button>
+            {/* Play/Pause button - only show if not reduced motion */}
+            {!reduceMotion && (
+              <button 
+                className="carousel-btn carousel-btn-play"
+                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                aria-label={isAutoPlaying ? "עצור" : "הפעל"}
+                disabled={!mounted}
+              >
+                {isAutoPlaying ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <rect x="6" y="4" width="4" height="16"/>
+                    <rect x="14" y="4" width="4" height="16"/>
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <polygon points="5,3 19,12 5,21"/>
+                  </svg>
+                )}
+              </button>
+            )}
           </div>
 
           {/* Thumbnail navigation */}
@@ -163,6 +206,8 @@ export default function Gallery() {
                   width={100}
                   height={75}
                   loading="lazy"
+                  sizes="(min-width: 768px) 80px, 50px"
+                  className="w-full h-full object-cover"
                 />
               </button>
             ))}

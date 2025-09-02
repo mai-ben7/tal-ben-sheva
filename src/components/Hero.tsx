@@ -1,18 +1,28 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useReducedMotionOrSmall } from '../hooks/useReducedMotionOrSmall'
 
 export default function Hero() {
+  const reduceMotion = useReducedMotionOrSmall()
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
       const offsetTop = element.offsetTop - 70
       window.scrollTo({
         top: offsetTop,
-        behavior: 'smooth'
+        behavior: reduceMotion ? 'auto' : 'smooth'
       })
     }
   }
+
+  // Disable animations if reduced motion is preferred
+  const animationProps = reduceMotion ? {
+    initial: { opacity: 1, y: 0, scale: 1 },
+    whileInView: { opacity: 1, y: 0, scale: 1 },
+    transition: { duration: 0 }
+  } : {}
 
   return (
     <section id="home" className="hero">
@@ -21,9 +31,10 @@ export default function Hero() {
         <div className="hero-content">
           <motion.h1 
             className="hero-title"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.3 }}
           >
             טל בן שבע
@@ -32,9 +43,10 @@ export default function Hero() {
           
           <motion.p 
             className="hero-tagline"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: "easeOut", delay: 0.2 }}
             viewport={{ once: true, amount: 0.3 }}
           >
             שחקנית | זמרת | רקדנית
@@ -42,9 +54,10 @@ export default function Hero() {
           
           <motion.p 
             className="hero-subtitle"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: "easeOut", delay: 0.4 }}
             viewport={{ once: true, amount: 0.3 }}
           >
             מוכשרת, מקצועית ומוכנה לעבודה
@@ -52,34 +65,38 @@ export default function Hero() {
           
           <motion.div 
             className="hero-buttons"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.6 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: "easeOut", delay: 0.6 }}
             viewport={{ once: true, amount: 0.3 }}
           >
             <a 
               href="#showreel" 
               className="btn btn-primary"
               onClick={(e) => { e.preventDefault(); scrollToSection('showreel') }}
+              aria-label="צפה בדמו של טל בן שבע"
             >
-              <i className="fas fa-play"></i>
+              <i className="fas fa-play" aria-hidden="true"></i>
               צפה בדמו
             </a>
             <a 
               href="#contact" 
               className="btn btn-secondary"
               onClick={(e) => { e.preventDefault(); scrollToSection('contact') }}
+              aria-label="צור קשר עם טל בן שבע"
             >
-              <i className="fas fa-phone"></i>
+              <i className="fas fa-phone" aria-hidden="true"></i>
               צור קשר עכשיו
             </a>
           </motion.div>
           
           <motion.div 
             className="hero-stats"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.8 }}
+            {...animationProps}
+            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: "easeOut", delay: 0.8 }}
             viewport={{ once: true, amount: 0.3 }}
           >
             <div className="stat-item">
@@ -102,11 +119,12 @@ export default function Hero() {
           <div className="portrait-container">
             <motion.img 
               src="/pictures/tal-portrait.png" 
-              alt="טל בן שבע" 
+              alt="טל בן שבע - תמונת דיוקן מקצועית" 
               className="portrait-image"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+              {...animationProps}
+              initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              whileInView={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: "easeOut", delay: 0.3 }}
               viewport={{ once: true, amount: 0.3 }}
             />
             <div className="portrait-overlay"></div>
