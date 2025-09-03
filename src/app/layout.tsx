@@ -37,6 +37,36 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <head>
+        {/* Favicon */}
+        <link 
+          rel="icon" 
+          type="image/x-icon" 
+          href="/favicon.ico?v=2" 
+        />
+        <link 
+          rel="shortcut icon" 
+          type="image/x-icon" 
+          href="/favicon.ico" 
+        />
+        <link 
+          rel="apple-touch-icon" 
+          href="/favicon.ico" 
+        />
+        <link 
+          rel="icon" 
+          type="image/png" 
+          sizes="32x32" 
+          href="/favicon.ico" 
+        />
+        <link 
+          rel="icon" 
+          type="image/png" 
+          sizes="16x16" 
+          href="/favicon.ico" 
+        />
+        {/* Prevent favicon caching */}
+        <meta name="msapplication-TileColor" content="#8e44ad" />
+        <meta name="theme-color" content="#8e44ad" />
         {/* Font Awesome */}
         <link 
           rel="stylesheet" 
