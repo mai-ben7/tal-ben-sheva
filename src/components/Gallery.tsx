@@ -116,7 +116,7 @@ export default function Gallery() {
           </motion.p>
         </div>
         
-        <div className="gallery-carousel">
+        <div className="gallery-carousel scroll-y-hidden">
           <div 
             className="carousel-container"
             onTouchStart={handleTouchStart}

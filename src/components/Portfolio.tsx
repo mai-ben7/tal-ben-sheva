@@ -2,22 +2,52 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import VideoModal from './VideoModal'
 
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState('acting')
   const [mounted, setMounted] = useState(false)
+  const [modalVideo, setModalVideo] = useState<{
+    isOpen: boolean
+    videoSrc: string
+    title: string
+    poster?: string
+  }>({
+    isOpen: false,
+    videoSrc: '',
+    title: '',
+    poster: ''
+  })
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  const openVideoModal = (videoSrc: string, title: string, poster?: string) => {
+    setModalVideo({
+      isOpen: true,
+      videoSrc,
+      title,
+      poster
+    })
+  }
+
+  const closeVideoModal = () => {
+    setModalVideo({
+      isOpen: false,
+      videoSrc: '',
+      title: '',
+      poster: ''
+    })
+  }
 
   const portfolioData = {
     acting: [
       {
         id: 1,
         title: 'הופעה מקצועית - טל בן שבע',
-        description: 'הופעה מקצועית המציגה את הטווח הדרמטי והקולי של טל.',
-        video: '/videos/vid1.mp4',
+        description: 'הופעה מקצועית המציגה את הטווח הדרמטי והקולי של טל. ביצועים מרשימים המדגימים עומק רגשי וטכניקה מקצועית.',
+        video: '/videos/tal1.mp4',
         poster: '/pictures/IMG_4417.jpeg',
         tags: ['משחק', 'תפקיד ראשי', 'דרמה'],
         featured: true,
@@ -25,27 +55,27 @@ export default function Portfolio() {
       },
       {
         id: 2,
-        title: 'המלט - אופליה',
-        description: 'ביצוע שייקספיר קלאסי המדגיש פגיעות רגשית וחוזק.',
-        video: '/videos/vid1.mp4',
+        title: 'הופעה מוזיקלית קלאסית',
+        description: 'ביצוע מוזיקלי מרגש של הדמות הקלאסית אופליה. הופעה מוזיקלית המדגישה פגיעות רגשית וחוזק קולי מעורר השראה.',
+        video: '/videos/tal2.mp4',
         poster: '/pictures/IMG_4431.jpeg',
-        tags: ['קלאסי', 'דרמה']
+        tags: ['מוזיקלי', 'קלאסי']
       },
       {
         id: 3,
         title: 'Much Ado About Nothing - ביאטריס',
-        description: 'דמות שנונה וחדת לשון המדגישה תזמון קומי ואינטליגנציה.',
-        video: '/videos/vid1.mp4',
+        description: 'הופעה מוזיקלית קומית של הדמות הנונה ביאטריס. ביצוע מוזיקלי מעולה המדגיש תזמון קומי ואינטליגנציה קולית.',
+        video: '/videos/tal3.mp4',
         poster: '/pictures/IMG_4425.jpeg',
-        tags: ['קומדיה', 'שייקספיר']
+        tags: ['מוזיקלי', 'קומדיה']
       }
     ],
     singing: [
       {
         id: 4,
         title: 'שירה מקצועית - טל בן שבע',
-        description: 'הופעה מוזיקלית המציגה את הטווח הקולי והמקצועיות של טל.',
-        video: '/videos/vid1.mp4',
+        description: 'הופעה מוזיקלית מרשימה המציגה את הטווח הקולי והמקצועיות של טל. ביצועים קוליים מעולים עם נוכחות בימתית.',
+        video: '/videos/tal3.mp4',
         poster: '/pictures/IMG_4123.jpeg',
         tags: ['שירה', 'מוזיקלי', 'הופעה'],
         featured: true,
@@ -54,8 +84,8 @@ export default function Portfolio() {
       {
         id: 5,
         title: '"On My Own" - Les Misérables',
-        description: 'ביצוע סולו אינטימי המדגים שליטה קולית ועומק רגשי.',
-        video: '/videos/vid1.mp4',
+        description: 'ביצוע סולו אינטימי ומרגש המדגים שליטה קולית ועומק רגשי. הופעה מוזיקלית מעוררת השראה.',
+        video: '/videos/tal2.mp4',
         poster: '/pictures/IMG_3648.jpeg',
         tags: ['סולו', 'מוזיקל']
       }
@@ -64,8 +94,8 @@ export default function Portfolio() {
       {
         id: 6,
         title: 'ריקוד מקצועי - טל בן שבע',
-        description: 'הופעת ריקוד מקצועית המציגה תנועה זורמת וטכניקה מדויקת.',
-        video: '/videos/vid1.mp4',
+        description: 'הופעת ריקוד מקצועית מרשימה המציגה תנועה זורמת וטכניקה מדויקת. ביצועים אנרגטיים עם שליטה מלאה בגוף.',
+        video: '/videos/tal2.mp4',
         poster: '/pictures/IMG_4397.jpeg',
         tags: ['ריקוד', 'כוריאוגרפיה', 'הופעה'],
         featured: true,
@@ -74,8 +104,8 @@ export default function Portfolio() {
       {
         id: 7,
         title: 'הופעת ג\'אז קבוצתית',
-        description: 'הופעה קבוצתית אנרגטית המציגה קצב ותיאום.',
-        video: '/videos/vid1.mp4',
+        description: 'הופעה קבוצתית אנרגטית ומרשימה המציגה קצב ותיאום מושלם. ביצועים דינמיים עם אנרגיה מדבקת.',
+        video: '/videos/tal1.mp4',
         poster: '/pictures/IMG_4064.jpeg',
         tags: ['ג\'אז', 'קבוצתי']
       }
@@ -148,16 +178,26 @@ export default function Portfolio() {
                 viewport={{ once: true }}
                 whileHover={{ y: -10 }}
               >
-                <div className="portfolio-video">
+                <div 
+                  className="portfolio-video"
+                  onClick={() => openVideoModal(item.video, item.title, item.poster)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <video 
-                    controls 
                     poster={item.poster}
                     title={item.title}
                     className="portfolio-video-player"
+                    style={{ pointerEvents: 'none' }}
                   >
                     <source src={item.video} type="video/mp4" />
                     הדפדפן שלך לא תומך באלמנט הוידאו.
                   </video>
+                  <div className="portfolio-video-overlay">
+                    <div className="play-button">
+                      <i className="fas fa-play"></i>
+                    </div>
+                    <p>לחץ לצפייה</p>
+                  </div>
                 </div>
                 
                 <div className="portfolio-info">
@@ -177,6 +217,14 @@ export default function Portfolio() {
           </div>
         </motion.div>
       </div>
+      
+      <VideoModal
+        isOpen={modalVideo.isOpen}
+        onClose={closeVideoModal}
+        videoSrc={modalVideo.videoSrc}
+        title={modalVideo.title}
+        poster={modalVideo.poster}
+      />
     </section>
   )
 } 
