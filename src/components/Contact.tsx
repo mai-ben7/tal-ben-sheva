@@ -28,17 +28,24 @@ export default function Contact() {
     setSubmitStatus('idle')
 
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      // Create mailto link
-      const mailtoLink = `mailto:tal@example.com?subject=פנייה חדשה מ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(`שם: ${formData.name}\nאימייל: ${formData.email}\nהודעה: ${formData.message}`)}`
-      
-      window.open(mailtoLink, '_blank')
-      
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', message: '' })
-    } catch {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -234,7 +241,7 @@ export default function Contact() {
               
               {submitStatus === 'success' && (
                 <div id="submit-status" className="success-message" role="alert">
-                  ההודעה נשלחה בהצלחה! נפתח חלון אימייל חדש.
+                  ההודעה נשלחה בהצלחה! נחזור אליך בהקדם.
                 </div>
               )}
               
