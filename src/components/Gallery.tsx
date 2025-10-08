@@ -24,18 +24,18 @@ export default function Gallery() {
   } : {}
 
   const galleryImages = [
-    { id: 1, src: '/pictures/IMG_3648.jpeg', alt: 'טל בן שבע - תמונה מקצועית 1' },
-    { id: 2, src: '/pictures/IMG_4064.jpeg', alt: 'טל בן שבע - תמונה מקצועית 2' },
-    { id: 3, src: '/pictures/IMG_4094.jpeg', alt: 'טל בן שבע - תמונה מקצועית 3' },
-    { id: 4, src: '/pictures/IMG_4123.jpeg', alt: 'טל בן שבע - תמונה מקצועית 4' },
-    { id: 5, src: '/pictures/IMG_4327.jpeg', alt: 'טל בן שבע - תמונה מקצועית 5' },
-    { id: 6, src: '/pictures/IMG_4397.jpeg', alt: 'טל בן שבע - תמונה מקצועית 6' },
-    { id: 7, src: '/pictures/IMG_4402.jpeg', alt: 'טל בן שבע - תמונה מקצועית 7' },
-    { id: 8, src: '/pictures/IMG_4417.jpeg', alt: 'טל בן שבע - תמונה מקצועית 8' },
-    { id: 9, src: '/pictures/IMG_4425.jpeg', alt: 'טל בן שבע - תמונה מקצועית 9' },
-    { id: 10, src: '/pictures/IMG_4426.jpeg', alt: 'טל בן שבע - תמונה מקצועית 10' },
-    { id: 11, src: '/pictures/IMG_4431.jpeg', alt: 'טל בן שבע - תמונה מקצועית 11' },
-    { id: 12, src: '/pictures/IMG_4432.jpeg', alt: 'טל בן שבע - תמונה מקצועית 12' },
+    { id: 1, src: '/pictures/IMG_3648.webp', alt: 'טל בן שבע - תמונה מקצועית 1' },
+    { id: 2, src: '/pictures/IMG_4064.webp', alt: 'טל בן שבע - תמונה מקצועית 2' },
+    { id: 3, src: '/pictures/IMG_4094.webp', alt: 'טל בן שבע - תמונה מקצועית 3' },
+    { id: 4, src: '/pictures/IMG_4123.webp', alt: 'טל בן שבע - תמונה מקצועית 4' },
+    { id: 5, src: '/pictures/IMG_4327.webp', alt: 'טל בן שבע - תמונה מקצועית 5' },
+    { id: 6, src: '/pictures/IMG_4397.webp', alt: 'טל בן שבע - תמונה מקצועית 6' },
+    { id: 7, src: '/pictures/IMG_4402.webp', alt: 'טל בן שבע - תמונה מקצועית 7' },
+    { id: 8, src: '/pictures/IMG_4417.webp', alt: 'טל בן שבע - תמונה מקצועית 8' },
+    { id: 9, src: '/pictures/IMG_4425.webp', alt: 'טל בן שבע - תמונה מקצועית 9' },
+    { id: 10, src: '/pictures/IMG_4426.webp', alt: 'טל בן שבע - תמונה מקצועית 10' },
+    { id: 11, src: '/pictures/IMG_4431.webp', alt: 'טל בן שבע - תמונה מקצועית 11' },
+    { id: 12, src: '/pictures/IMG_4432.webp', alt: 'טל בן שבע - תמונה מקצועית 12' },
   ]
 
   useEffect(() => {
@@ -138,9 +138,11 @@ export default function Gallery() {
                   alt={galleryImages[currentIndex].alt}
                   width={800}
                   height={600}
-                  priority
+                  priority={currentIndex === 0}
                   sizes="(min-width: 1024px) 800px, (min-width: 768px) 600px, 400px"
                   className="w-full h-full object-cover"
+                  placeholder="blur"
+                  blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                 />
               </motion.div>
             </AnimatePresence>

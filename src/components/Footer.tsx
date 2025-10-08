@@ -69,18 +69,11 @@ export default function Footer() {
             viewport={{ once: true }}
           >
             <a 
-              href={`tel:${process.env.NEXT_PUBLIC_PHONE_NUMBER || '0527533711'}`}
-              className="footer-link"
-            >
-              <i className="fas fa-phone"></i>
-              {process.env.NEXT_PUBLIC_PHONE_NUMBER || '0527533711'}
-            </a>
-            <a 
-              href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'tal942899@gmail.com'}`}
+              href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'Talbensheva@gmail.com'}`}
               className="footer-link"
             >
               <i className="fas fa-envelope"></i>
-              {process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'tal942899@gmail.com'}
+              {process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'Talbensheva@gmail.com'}
             </a>
           </motion.div>
         </div>

@@ -2,7 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import VideoModal from './VideoModal'
+import dynamic from 'next/dynamic'
+
+const VideoModal = dynamic(() => import('./VideoModal'), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+})
 
 export default function Showreel() {
   const [mounted, setMounted] = useState(false)

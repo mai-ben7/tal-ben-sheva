@@ -38,11 +38,6 @@ export default function QuickAccess() {
       icon: 'fas fa-envelope',
       text: 'צור קשר',
       href: '#contact'
-    },
-    {
-      icon: 'fas fa-phone',
-      text: 'התקשר עכשיו',
-      href: `tel:${process.env.NEXT_PUBLIC_PHONE_NUMBER || '0527533711'}`
     }
   ]
 

@@ -101,8 +101,7 @@ actress-portfolio-nextjs/
    Create a `.env.local` file in the root directory:
    ```env
    # Contact Information
-   NEXT_PUBLIC_CONTACT_EMAIL=tal942899@gmail.com
-   NEXT_PUBLIC_PHONE_NUMBER=0527533711
+   NEXT_PUBLIC_CONTACT_EMAIL=Talbensheva@gmail.com
    
    # Social Media Links
    NEXT_PUBLIC_INSTAGRAM_URL=https://instagram.com/talbensheva
@@ -165,8 +164,7 @@ Create a `.env.local` file in the root directory:
 
 ```env
 # Contact Information
-NEXT_PUBLIC_CONTACT_EMAIL=tal942899@gmail.com
-NEXT_PUBLIC_PHONE_NUMBER=0527533711
+NEXT_PUBLIC_CONTACT_EMAIL=Talbensheva@gmail.com
 
 # Social Media Links
 NEXT_PUBLIC_INSTAGRAM_URL=https://instagram.com/talbensheva
@@ -287,8 +285,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions, support, or collaboration opportunities:
 
-- **Email**: tal942899@gmail.com
-- **Phone**: 0527533711
+- **Email**: Talbensheva@gmail.com
 - **Instagram**: [@talbensheva](https://instagram.com/talbensheva)
 - **TikTok**: [@talbensheva](https://www.tiktok.com/@talbensheva)
 - **YouTube**: [@talbensheva](https://www.youtube.com/@talbensheva)

@@ -67,22 +67,35 @@ export default function RootLayout({
         {/* Prevent favicon caching */}
         <meta name="msapplication-TileColor" content="#8e44ad" />
         <meta name="theme-color" content="#8e44ad" />
-        {/* Font Awesome */}
+        {/* Preconnect to external domains */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+        
+        {/* Font Awesome - Load asynchronously */}
         <link 
-          rel="stylesheet" 
+          rel="preload" 
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+          as="style"
         />
+        <noscript>
+          <link 
+            rel="stylesheet" 
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+          />
+        </noscript>
       </head>
       <body className={`${heebo.variable} ${assistant.variable} font-assistant`}>
-        {/* jQuery for GSAP compatibility */}
+        {/* Load Font Awesome asynchronously */}
         <Script 
-          src="https://code.jquery.com/jquery-3.6.0.min.js"
-          strategy="beforeInteractive"
-        />
-        {/* GSAP TweenMax */}
-        <Script 
-          src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"
-          strategy="beforeInteractive"
+          id="fontawesome-loader"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{__html: `
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
+            document.head.appendChild(link);
+          `}}
         />
         {/* Hydration handler */}
         <Script 

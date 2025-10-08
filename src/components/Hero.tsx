@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { useReducedMotionOrSmall } from '../hooks/useReducedMotionOrSmall'
 
 export default function Hero() {
@@ -25,9 +26,9 @@ export default function Hero() {
   } : {}
 
   return (
-    <section id="home" className="hero body--no-scroll">
-      <div className="hero-split overflow-y-hidden">
-        {/* Left Side - Content */}
+    <section id="home" className="hero">
+      <div className="hero-split">
+        {/* Content Section */}
         <div className="hero-content">
           <motion.h1 
             className="hero-title"
@@ -86,7 +87,7 @@ export default function Hero() {
               onClick={(e) => { e.preventDefault(); scrollToSection('contact') }}
               aria-label="צור קשר עם טל בן שבע"
             >
-              <i className="fas fa-phone" aria-hidden="true"></i>
+              <i className="fas fa-envelope" aria-hidden="true"></i>
               צור קשר עכשיו
             </a>
           </motion.div>
@@ -114,19 +115,26 @@ export default function Hero() {
           </motion.div>
         </div>
         
-        {/* Right Side - Tal's Portrait */}
-        <div className="hero-portrait ">
+        {/* Portrait Section */}
+        <div className="hero-portrait">
           <div className="portrait-container">
-            <motion.img 
-              src="/pictures/tal-portrait.png" 
-              alt="טל בן שבע - תמונת דיוקן מקצועית" 
-              className="portrait-image"
+            <motion.div
               {...animationProps}
               initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
               whileInView={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
               transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: "easeOut", delay: 0.3 }}
               viewport={{ once: true, amount: 0.3 }}
-            />
+            >
+              <Image 
+                src="/pictures/tal-portrait.png" 
+                alt="טל בן שבע - תמונת דיוקן מקצועית"
+                width={600}
+                height={900}
+                priority
+                sizes="(min-width: 1024px) 600px, (min-width: 768px) 400px, 300px"
+                className="portrait-image"
+              />
+            </motion.div>
             <div className="portrait-overlay"></div>
           </div>
         </div>
