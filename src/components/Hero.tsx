@@ -25,8 +25,8 @@ export default function Hero() {
   } : {}
 
   return (
-    <section id="home" className="hero">
-      <div className="hero-split">
+    <section id="home" className="hero body--no-scroll">
+      <div className="hero-split overflow-y-hidden">
         {/* Left Side - Content */}
         <div className="hero-content">
           <motion.h1 
@@ -115,7 +115,7 @@ export default function Hero() {
         </div>
         
         {/* Right Side - Tal's Portrait */}
-        <div className="hero-portrait">
+        <div className="hero-portrait ">
           <div className="portrait-container">
             <motion.img 
               src="/pictures/tal-portrait.png" 

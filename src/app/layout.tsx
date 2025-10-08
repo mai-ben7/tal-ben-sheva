@@ -84,6 +84,14 @@ export default function RootLayout({
           src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"
           strategy="beforeInteractive"
         />
+        {/* Hydration handler */}
+        <Script 
+          id="hydration-handler"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{__html: `
+            document.body.classList.add('hydrated');
+          `}}
+        />
         {children}
       </body>
     </html>
