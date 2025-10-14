@@ -269,21 +269,38 @@ h1, h2, h3 {
     box-sizing: border-box;
 }
 
-/* Mobile-first content section (buttons and stats) */
-.hero-content {
-    flex: 1;
+/* Mobile-first text section (title, tagline, subtitle) */
+.hero-text {
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 1rem 1.5rem 0;
+    padding: 1rem 1.5rem 0.5rem;
     position: relative;
-    min-height: auto;
     width: 100%;
     overflow: hidden;
     max-width: 100%;
     box-sizing: border-box;
+    order: 1; /* Text first on mobile */
+}
+
+/* Mobile-first actions section (buttons and stats) */
+.hero-actions {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1rem 1.5rem 2rem;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+    order: 3; /* Actions after image on mobile */
 }
 
 /* Mobile: Hide desktop-only elements, show mobile-only elements */
@@ -295,7 +312,18 @@ h1, h2, h3 {
     display: block !important;
 }
 
-.hero-content::before {
+.hero-text::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(102, 126, 234, 0.95), rgba(118, 75, 162, 0.95));
+    z-index: -1;
+}
+
+.hero-actions::before {
     content: '';
     position: absolute;
     top: 0;
@@ -317,6 +345,7 @@ h1, h2, h3 {
     display: flex;
     align-items: center;
     justify-content: center;
+    order: 2; /* Image after text on mobile */
 }
 
 /* Desktop layout */
@@ -327,24 +356,33 @@ h1, h2, h3 {
     }
     
     .hero-split {
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        width: 100%;
     }
     
     .hero-header {
         display: none; /* Hide header on desktop - content is in hero-content */
     }
     
-    .hero-content {
-        flex: 1;
+    .hero-text {
+        grid-column: 1;
+        grid-row: 1;
         min-height: auto;
-        padding: 3rem 2.5rem;
-        order: 1; /* Content first on desktop (left side) */
+        padding: 2rem 2.5rem 1rem;
+    }
+    
+    .hero-actions {
+        grid-column: 1;
+        grid-row: 2;
+        min-height: auto;
+        padding: 0 2.5rem 2rem;
     }
     
     .hero-portrait {
-        flex: 1;
-
-        order: 2; /* Portrait second on desktop (right side) */
+        grid-column: 2;
+        grid-row: 1 / 3; /* Span both rows */
     }
     
     /* Show desktop-only elements on desktop */
@@ -431,7 +469,7 @@ h1, h2, h3 {
     .portrait-container {
         padding: 2rem;
         border-radius: 20px; /* Keep rounded corners on tablet */
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); /* Keep shadow on tablet */
+
     }
     
     .portrait-image {

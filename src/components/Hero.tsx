@@ -28,8 +28,8 @@ export default function Hero() {
   return (
     <section id="home" className="hero">
       <div className="hero-split">
-        {/* Content Section */}
-        <div className="hero-content">
+        {/* Text Section */}
+        <div className="hero-text">
           <motion.h1 
             className="hero-title"
             {...animationProps}
@@ -63,7 +63,34 @@ export default function Hero() {
           >
             מוכשרת, מקצועית ומוכנה לעבודה
           </motion.p>
-          
+        </div>
+        
+        {/* Portrait Section */}
+        <div className="hero-portrait">
+          <div className="portrait-container">
+            <motion.div
+              {...animationProps}
+              initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              whileInView={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: "easeOut", delay: 0.3 }}
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <Image 
+                src="/pictures/tal-portrait.png" 
+                alt="טל בן שבע - תמונת דיוקן מקצועית"
+                width={600}
+                height={900}
+                priority
+                sizes="(min-width: 1024px) 600px, (min-width: 768px) 400px, 300px"
+                className="portrait-image"
+              />
+            </motion.div>
+            <div className="portrait-overlay"></div>
+          </div>
+        </div>
+        
+        {/* Actions Section (Buttons & Stats) */}
+        <div className="hero-actions">
           <motion.div 
             className="hero-buttons"
             {...animationProps}
@@ -110,30 +137,6 @@ export default function Hero() {
             </div>
           
           </motion.div>
-        </div>
-        
-        {/* Portrait Section */}
-        <div className="hero-portrait">
-          <div className="portrait-container">
-            <motion.div
-              {...animationProps}
-              initial={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              whileInView={reduceMotion ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
-              transition={reduceMotion ? { duration: 0 } : { duration: 1.2, ease: "easeOut", delay: 0.3 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <Image 
-                src="/pictures/tal-portrait.png" 
-                alt="טל בן שבע - תמונת דיוקן מקצועית"
-                width={600}
-                height={900}
-                priority
-                sizes="(min-width: 1024px) 600px, (min-width: 768px) 400px, 300px"
-                className="portrait-image"
-              />
-            </motion.div>
-            <div className="portrait-overlay"></div>
-          </div>
         </div>
       </div>
     </section>
