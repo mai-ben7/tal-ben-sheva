@@ -71,16 +71,7 @@ export default function Contact() {
           >
             צור קשר
           </motion.h2>
-          <motion.p 
-            className="section-subtitle"
-            {...animationProps}
-            initial={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            whileInView={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-            transition={reduceMotion ? { duration: 0, delay: 0.2 } : { duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            מוכנה לעבודה ופתוחה להזדמנויות חדשות
-          </motion.p>
+          
         </div>
         
         <div className="contact-content">

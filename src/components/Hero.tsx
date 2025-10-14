@@ -50,7 +50,7 @@ export default function Hero() {
             transition={reduceMotion ? { duration: 0 } : { duration: 1, ease: "easeOut", delay: 0.2 }}
             viewport={{ once: true, amount: 0.3 }}
           >
-            שחקנית | זמרת | רקדנית
+            שחקנית | רקדנית | זמרת
           </motion.p>
           
           <motion.p 
@@ -79,7 +79,7 @@ export default function Hero() {
               aria-label="צפה בדמו של טל בן שבע"
             >
               <i className="fas fa-play" aria-hidden="true"></i>
-              צפה בדמו
+              צפה בשואוריל
             </a>
             <a 
               href="#contact" 
@@ -88,7 +88,7 @@ export default function Hero() {
               aria-label="צור קשר עם טל בן שבע"
             >
               <i className="fas fa-envelope" aria-hidden="true"></i>
-              צור קשר עכשיו
+              ליצירת קשר
             </a>
           </motion.div>
           
@@ -108,10 +108,7 @@ export default function Hero() {
               <span className="stat-number">מוכשרת</span>
               <span className="stat-label">במשחק</span>
             </div>
-            <div className="stat-item">
-              <span className="stat-number">זמינה</span>
-              <span className="stat-label">לעבודה</span>
-            </div>
+          
           </motion.div>
         </div>
         

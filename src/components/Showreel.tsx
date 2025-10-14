@@ -56,7 +56,7 @@ export default function Showreel() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            דמו מקצועי
+            שואוריל
           </motion.h2>
           <motion.p 
             className="section-subtitle"
@@ -126,7 +126,7 @@ export default function Showreel() {
             
             <div className="showreel-cta">
               <a href="#contact" className="btn btn-primary">
-                הזמן לאודישן
+                ליצירת קשר
               </a>
             </div>
           </motion.div>

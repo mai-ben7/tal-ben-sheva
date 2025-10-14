@@ -76,16 +76,16 @@ export default function Navigation() {
             onClick={(e) => { e.preventDefault(); scrollToSection('home') }}
             aria-label="חזרה לדף הבית"
           >
-            טל בן שבע
+            טל בן שבע ⭐
           </a>
         </div>
         
         <ul className={`nav-menu ${mounted && isMenuOpen ? 'active' : ''}`}>
           <li><a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('home') }}>בית</a></li>
           <li><a href="#showreel" onClick={(e) => { e.preventDefault(); scrollToSection('showreel') }}>דמו</a></li>
+          <li><a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about') }}>אודות</a></li>
           <li><a href="#portfolio" onClick={(e) => { e.preventDefault(); scrollToSection('portfolio') }}>תיק עבודות</a></li>
           <li><a href="#gallery" onClick={(e) => { e.preventDefault(); scrollToSection('gallery') }}>גלריה</a></li>
-          <li><a href="#about" onClick={(e) => { e.preventDefault(); scrollToSection('about') }}>אודות</a></li>
           <li><a href="#contact" onClick={(e) => { e.preventDefault(); scrollToSection('contact') }}>צור קשר</a></li>
         </ul>
         

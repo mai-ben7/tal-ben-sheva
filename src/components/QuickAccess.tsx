@@ -26,7 +26,7 @@ export default function QuickAccess() {
   const quickItems = [
     {
       icon: 'fas fa-video',
-      text: 'דמו מקצועי',
+      text: 'שואוריל מקצועי',
       href: '#showreel'
     },
     {
@@ -58,8 +58,8 @@ export default function QuickAccess() {
               }}
               initial={{ opacity: 0, y: 20 }}
               animate={mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: index * 0.1 }}
-              whileHover={mounted ? { y: -5 } : {}}
+              transition={{ duration: 0.2, ease: "easeOut", delay: index * 0.02  }}
+              whileHover={mounted ? { y: -3 } : {}}
             >
               <i className={item.icon}></i>
               <span>{item.text}</span>

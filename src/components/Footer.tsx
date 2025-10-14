@@ -39,8 +39,15 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h3>טל בן שבע</h3>
-            <p>שחקנית מקצועית | בוגרת בית צבי</p>
+            <h3>טל בן שבע ⭐</h3>
+            <p>שחקנית - בוגרת בית צבי | רקדנית | זמרת</p>
+            <a 
+              href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'Talbensheva@gmail.com'}`}
+              className="footer-link"
+            >
+              <i className="fas fa-envelope"></i>
+              {process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'Talbensheva@gmail.com'}
+            </a>
             <div className="social-links">
               {socialLinks.map((social, index) => (
                 <motion.a
@@ -60,22 +67,6 @@ export default function Footer() {
               ))}
             </div>
           </motion.div>
-          
-          <motion.div 
-            className="footer-contact"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={mounted ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <a 
-              href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'Talbensheva@gmail.com'}`}
-              className="footer-link"
-            >
-              <i className="fas fa-envelope"></i>
-              {process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'Talbensheva@gmail.com'}
-            </a>
-          </motion.div>
         </div>
         
         <motion.div 
@@ -86,7 +77,7 @@ export default function Footer() {
           viewport={{ once: true }}
         >
           <p>
-            &copy; 2024 מאי בן שבע. כל הזכויות שמורות. |{' '}
+            &copy; 2025 מאי בן שבע. כל הזכויות שמורות. |{' '}
             <a href="#" target="_blank" rel="noopener noreferrer">
               האתר שלי
             </a>

@@ -79,6 +79,19 @@ export default function About() {
                 </p>
               </div>
             </div>
+
+            {/* Resume Download Button */}
+            <div className="resume-section">
+              <a 
+                href="/resume.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="btn btn-primary resume-btn"
+              >
+                <i className="fas fa-download" aria-hidden="true"></i>
+                הורד קורות חיים
+              </a>
+            </div>
           </motion.div>
           
           <motion.div 

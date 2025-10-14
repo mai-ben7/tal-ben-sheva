@@ -2,10 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import VideoModal from './VideoModal'
 
-export default function Portfolio() {
-  const [activeTab, setActiveTab] = useState('acting')
+interface PortfolioProps {
+  activeTab?: string
+  setActiveTab?: (tab: string) => void
+}
+
+export default function Portfolio({ activeTab = 'acting', setActiveTab }: PortfolioProps) {
   const [mounted, setMounted] = useState(false)
   const [modalVideo, setModalVideo] = useState<{
     isOpen: boolean
@@ -48,7 +53,7 @@ export default function Portfolio() {
         title: 'הופעה מקצועית - טל בן שבע',
         description: 'הופעה מקצועית המציגה את הטווח הדרמטי והקולי של טל. ביצועים מרשימים המדגימים עומק רגשי וטכניקה מקצועית.',
         video: '/videos/tal1.mp4',
-        poster: '/pictures/IMG_4417.jpeg',
+        poster: '/pictures/IMG_4417.webp',
         tags: ['משחק', 'תפקיד ראשי', 'דרמה'],
         featured: true,
         badge: 'תפקיד ראשי'
@@ -58,7 +63,7 @@ export default function Portfolio() {
         title: 'הופעה מוזיקלית קלאסית',
         description: 'ביצוע מוזיקלי מרגש של הדמות הקלאסית אופליה. הופעה מוזיקלית המדגישה פגיעות רגשית וחוזק קולי מעורר השראה.',
         video: '/videos/tal2.mp4',
-        poster: '/pictures/IMG_4431.jpeg',
+        poster: '/pictures/IMG_4431.webp',
         tags: ['מוזיקלי', 'קלאסי']
       },
       {
@@ -66,7 +71,7 @@ export default function Portfolio() {
         title: 'Much Ado About Nothing - ביאטריס',
         description: 'הופעה מוזיקלית קומית של הדמות הנונה ביאטריס. ביצוע מוזיקלי מעולה המדגיש תזמון קומי ואינטליגנציה קולית.',
         video: '/videos/tal3.mp4',
-        poster: '/pictures/IMG_4425.jpeg',
+        poster: '/pictures/IMG_4425.webp',
         tags: ['מוזיקלי', 'קומדיה']
       }
     ],
@@ -86,7 +91,7 @@ export default function Portfolio() {
         title: '"On My Own" - Les Misérables',
         description: 'ביצוע סולו אינטימי ומרגש המדגים שליטה קולית ועומק רגשי. הופעה מוזיקלית מעוררת השראה.',
         video: '/videos/tal2.mp4',
-        poster: '/pictures/IMG_3648.jpeg',
+        poster: '/pictures/IMG_4397.jpeg',
         tags: ['סולו', 'מוזיקל']
       }
     ],
@@ -106,7 +111,7 @@ export default function Portfolio() {
         title: 'הופעת ג\'אז קבוצתית',
         description: 'הופעה קבוצתית אנרגטית ומרשימה המציגה קצב ותיאום מושלם. ביצועים דינמיים עם אנרגיה מדבקת.',
         video: '/videos/tal1.mp4',
-        poster: '/pictures/IMG_4064.jpeg',
+        poster: '/pictures/IMG_4402.jpeg',
         tags: ['ג\'אז', 'קבוצתי']
       }
     ]
@@ -132,31 +137,34 @@ export default function Portfolio() {
             transition={{ duration: 0.8, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            מגוון תפקידים ויכולות מקצועיות
+            אוסף מהביצועים הטובים ביותר שלי במשחק, שירה וריקוד
           </motion.p>
         </div>
         
         <div className="portfolio-tabs">
           <button 
             className={`tab-btn ${mounted && activeTab === 'acting' ? 'active' : ''}`}
-            onClick={() => setActiveTab('acting')}
+            onClick={() => setActiveTab?.('acting')}
             disabled={!mounted}
           >
-            משחק
-          </button>
-          <button 
-            className={`tab-btn ${mounted && activeTab === 'singing' ? 'active' : ''}`}
-            onClick={() => setActiveTab('singing')}
-            disabled={!mounted}
-          >
-            שירה
+            <i className="fas fa-theater-masks"></i>
+            <span>משחק</span>
           </button>
           <button 
             className={`tab-btn ${mounted && activeTab === 'dance' ? 'active' : ''}`}
-            onClick={() => setActiveTab('dance')}
+            onClick={() => setActiveTab?.('dance')}
             disabled={!mounted}
           >
-            ריקוד
+            <i className="fas fa-sparkles"></i>
+            <span>ריקוד</span>
+          </button>
+          <button 
+            className={`tab-btn ${mounted && activeTab === 'singing' ? 'active' : ''}`}
+            onClick={() => setActiveTab?.('singing')}
+            disabled={!mounted}
+          >
+            <i className="fas fa-music"></i>
+            <span>שירה</span>
           </button>
         </div>
         
@@ -174,7 +182,7 @@ export default function Portfolio() {
                 className={`portfolio-item ${item.featured ? 'featured' : ''}`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.2, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -10 }}
               >
