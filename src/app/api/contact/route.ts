@@ -29,7 +29,7 @@ const BOT_PROTECTION_CONFIG = {
 }
 
 // Enhanced logging function
-function logSuspiciousAttempt(ip: string, email: string, reason: string, data: any) {
+function logSuspiciousAttempt(ip: string, email: string, reason: string, data: { name?: string; message?: string; userAgent?: string }) {
   const timestamp = new Date().toISOString()
   console.log(`[BOT_PROTECTION] ${timestamp} - IP: ${ip} - Email: ${email} - Reason: ${reason}`, {
     ip,
@@ -165,7 +165,7 @@ function checkRateLimit(ip: string): { allowed: boolean; reason?: string } {
 }
 
 // Honeypot check
-function checkHoneypot(data: any): { isBot: boolean; reason?: string } {
+function checkHoneypot(data: { company?: string }): { isBot: boolean; reason?: string } {
   // Check if honeypot field is filled (indicates bot)
   if (data.company && data.company.trim() !== '') {
     return { isBot: true, reason: 'honeypot_triggered' }
@@ -179,7 +179,7 @@ export async function POST(request: Request) {
   
   try {
     const data = await request.json()
-    const { name, email, message, company } = data
+    const { name, email, message } = data
 
     // Basic input validation
     if (!name || !email || !message) {
