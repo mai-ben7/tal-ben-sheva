@@ -6,7 +6,7 @@ import { useReducedMotionOrSmall } from '../hooks/useReducedMotionOrSmall'
 
 export default function Contact() {
   const [mounted, setMounted] = useState(false)
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', company: '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const reduceMotion = useReducedMotionOrSmall()
@@ -40,7 +40,7 @@ export default function Contact() {
 
       if (response.ok) {
         setSubmitStatus('success')
-        setFormData({ name: '', email: '', message: '' })
+        setFormData({ name: '', email: '', message: '', company: '' })
       } else {
         setSubmitStatus('error')
       }
@@ -219,6 +219,20 @@ export default function Contact() {
                     אנא הזן הודעה של לפחות 10 תווים
                   </div>
                 )}
+              </div>
+              
+              {/* Honeypot field - hidden from users but visible to bots */}
+              <div style={{ display: 'none' }} aria-hidden="true">
+                <label htmlFor="company">Company (leave blank)</label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleInputChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
               </div>
               
               <button 
