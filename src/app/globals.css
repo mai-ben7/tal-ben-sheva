@@ -2098,6 +2098,30 @@ video:-moz-full-screen {
     object-fit: contain;
 }
 
+/* Portfolio grid layout */
+.portfolio-content {
+    width: 100%;
+}
+
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.portfolio-item {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* Responsive modal adjustments */
 @media (max-width: 768px) {
     .video-modal-overlay {
